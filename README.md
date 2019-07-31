@@ -5,4 +5,4 @@ Download all files and change directory to the downloaded folder.
 
     python tweepy_steamer.py
     
-Edit 'realDonaldTrump' with other Twitter usernames if you want to track likes and retweets for more users.
+You will be prompted to type in the twitter account of your desire. Do not include the "@" symbol and place quotes around your desired account name.
