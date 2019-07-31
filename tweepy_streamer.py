@@ -69,7 +69,6 @@ class TweetAnalyzer():
         df['Date'] = np.array([tweet.created_at for tweet in tweets])
         df['Retweets'] = np.array([tweet.retweet_count for tweet in tweets])
         df['Text'] = np.array([tweet.text[0:2] for tweet in tweets])
-        df['Retweeted'] = np.array([tweet.user for tweet in tweets])
         return df
     # def clean_tweet(self, tweet):
     #     return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
@@ -87,15 +86,14 @@ if __name__ == "__main__":
     twitter_client = TwitterClient()
     tweet_analyzer = TweetAnalyzer()
     api = twitter_client.get_twitter_client_api()
-
-    tweets = api.user_timeline(screen_name = 'realDonaldTrump', count = 250)
+    
+    act_name = input("Insert the twitter account you are interested in (disclude the @ sign and put quotes around it):")
+    tweets = api.user_timeline(screen_name = act_name, count = 250)
     
     #
     #
     df = tweet_analyzer.tweets_to_data_frame(tweets)
     # df['Sentiment'] = np.array([tweet_analyzer.analyze_sentiment(tweet) for tweet in df['Text']])
-
-
 
 
 
@@ -111,7 +109,7 @@ if __name__ == "__main__":
 
     """Time Series"""
     time_likes = pd.Series(data=df["Likes"].values, index=df['Date'])
-    time_likes.plot(figsize=(16,4), color = 'r', label = 'Likes', legend=True)
+    time_likes.plot(figsize=(16,4), color = 'r', label = 'Likes', legend=True, title = act_name +"'s likes and retweets")
     time_retweets = pd.Series(data=df["Retweets"].values, index=df['Date'])
     time_retweets.plot(figsize=(16,4), color = 'b', label = 'Retweets', legend=True)
     plt.show()
